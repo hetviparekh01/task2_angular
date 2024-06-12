@@ -1,0 +1,84 @@
+### Task Description: Address Management System
+
+Create an Angular application to manage user addresses using a reactive form with FormArray and @Input and @Output decorators for parent-child communication.
+The application will allow users to add, delete, and update their addresses dynamically.
+
+#### Components:
+
+1. **AppComponent (Parent Component)**
+    - Passes the user list to UserManagerComponent using the @Input decorator.
+    - Handles events emitted by UserManagerComponent using the @Output decorator for adding, deleting, and updating addresses.
+
+2. **UserManagerComponent (Child Component)**
+    - Contains the reactive form with a FormGroup for user information and a nested FormArray for addresses.
+    - Displays user information and their addresses.
+    - Provides controls for adding, deleting, and updating addresses.
+    - Emits events to the parent component when addresses are added, deleted, or updated.
+
+#### Functionality:
+
+1. **Initialization**
+    - The AppComponent initializes, each having a set of addresses. 
+    - Example user list:
+        {
+          userId: 1,
+          userName: 'Jane Smith',
+          email: 'jane.smith@example.com',
+          addresses: [
+            { street: '789 Maple St', city: 'Capital City', state: 'IL', zipCode: '62703' }
+          ]
+        }
+
+2. **Reactive Form Setup**
+    - The UserManagerComponent sets up a FormGroup containing user information fields (userId, userName, email) and a FormArray for addresses.
+    - Each address is represented as a FormGroup within the FormArray with fields: street, city, state, and zipCode.
+
+3. **Adding an Address**
+    - A button in the UserManagerComponent allows the user to add a new address.
+    - When clicked, it pushes a new FormGroup into the FormArray.
+    - An event is emitted to notify the AppComponent of the addition.
+
+4. **Deleting an Address**
+    - Each address has a delete button that removes the corresponding FormGroup from the FormArray.
+    - An event is emitted to notify the AppComponent of the deletion.
+
+5. **Updating an Address**
+    - Changes to any address in the FormArray automatically update the reactive form model.
+    - An event is emitted to notify the AppComponent of the updates.
+
+6. **Parent-Child Communication**
+    - @Input: The AppComponent passes the users list to the UserManagerComponent.
+    - @Output: The UserManagerComponent emits events to the AppComponent for adding, deleting, and updating addresses.
+
+#### Fields for Reactive Form
+
+1. **User Fields**
+    - userId: A input field for the unique identifier of the user.
+    - userName: A text input field for the user's name.
+    - email: An email input field for the user's email address.
+
+2. **Address Fields**
+    - street: A text input field for the street address.
+    - city: A text input field for the city.
+    - state: A text input field for the state.
+    - zipCode: A text input field for the zip code.
+
+#### Flow:
+
+1. **AppComponent**
+    - Passes the users list to the UserManagerComponent via @Input.
+    - Handles events for adding, deleting, and updating addresses from the UserManagerComponent.
+
+2. **UserManagerComponent**
+    - Sets up a reactive form with a FormGroup for user information and a FormArray for addresses.
+    - Allows users to add, delete, and update addresses.
+    - Emits events for changes to the AppComponent.
+
+3. **Adding, Deleting, Updating Addresses**
+    - Add: Pushes a new FormGroup into the FormArray and emits an add event.
+    - Delete: Removes the FormGroup from the FormArray and emits a delete event.
+    - Update: Automatically updates the reactive form model and emits an update event.
+
+4. **Event Handling**
+    - AppComponent handles add, delete, and update events emitted by UserManagerComponent.
+    - Updates the user list and addresses accordingly.
