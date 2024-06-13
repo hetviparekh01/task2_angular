@@ -1,1 +1,54 @@
-
+<div class="row justify-content-center">
+    <div class="col-5">
+        <form action="" [formGroup]="userForm" (ngSubmit)="submitForm()">
+            <div class="box">
+                <h1 class="text-center">User Details</h1>
+                <div class="row my-3">
+                    <div class="mb-3">
+                        <label for="" class="form-label">UserId:</label>
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                            placeholder="" />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Name:</label>
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                            placeholder="" />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Email:</label>
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                            placeholder="" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <div formArrayName="addresses">
+                            <div *ngFor="let address of addressList.controls;let i=index">
+                                <p ><b>Street Address {{i+1}}</b></p>
+                                <label for="address{{i}}" class="form-label">Street</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                                    placeholder="" />
+                                <label for="address-{{i}}" class="form-label">City</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                                    placeholder="" />
+                                <label for="address{{i}}" class="form-label">State</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                                    placeholder="" />
+                                <label for="address{{i}}" class="form-label">ZipCode</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                                    placeholder="" />
+                                <button type="button" class="btn btn-primary" (click)="removeAddress(i)"
+                                    *ngIf="i > 0">-</button>
+                            </div>
+                            <button type="button" class="btn btn-primary my-2" (click)="addAddress()">Add Address</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
