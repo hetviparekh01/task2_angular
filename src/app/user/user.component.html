@@ -1,54 +1,139 @@
 <div class="row justify-content-center">
-    <div class="col-5">
-        <form action="" [formGroup]="userForm" (ngSubmit)="submitForm()">
-            <div class="box">
-                <h1 class="text-center">User Details</h1>
-                <div class="row my-3">
+    <form action="" [formGroup]="userForm" (ngSubmit)="submitForm()">
+        <div class="box container">
+            <h1 class="text-center">User Details</h1>
+            <div class="row">
+                <div class="col-lg-4">
                     <div class="mb-3">
                         <label for="" class="form-label">UserId:</label>
-                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                            placeholder="" />
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                            formControlName="userId"
+                            [ngClass]="{ 'is-invalid': userForm.get('userId')?.invalid&&(userForm.get('userId')?.touched||userForm.get('userId')?.dirty), 'is-valid' : userForm.get('userId')?.valid }" />
+                        <div *ngIf="userForm.get('userId')?.invalid && (userForm.get('userId')?.touched || userForm.get('userId')?.dirty )"
+                            class="text-danger">
+                            <span *ngIf="userForm.get('userId')?.errors?.['required']">
+                                **userId is required.
+                            </span>
+                            <span *ngIf="userForm.get('userId')?.errors?.['pattern']">
+                                **UserId must be number & of length 4 only
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="row my-3">
+                <div class="col-lg-4">
                     <div class="mb-3">
                         <label for="" class="form-label">Name:</label>
-                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                            placeholder="" />
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                            formControlName="username"
+                            [ngClass]="{ 'is-invalid': userForm.get('username')?.invalid&&(userForm.get('username')?.touched||userForm.get('username')?.dirty), 'is-valid' : userForm.get('username')?.valid }" />
+                        <div *ngIf="userForm.get('username')?.invalid && (userForm.get('username')?.touched || userForm.get('username')?.dirty )"
+                            class="text-danger">
+                            <span *ngIf="userForm.get('username')?.errors?.['required']">
+                                **username is required.
+                            </span>
+                            <span *ngIf="userForm.get('username')?.errors?.['pattern']">
+                                **username must be character only
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="row my-3">
+                <div class="col-lg-4">
                     <div class="mb-3">
                         <label for="" class="form-label">Email:</label>
-                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                            placeholder="" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-3">
-                        <div formArrayName="addresses">
-                            <div *ngFor="let address of addressList.controls;let i=index">
-                                <p ><b>Street Address {{i+1}}</b></p>
-                                <label for="address{{i}}" class="form-label">Street</label>
-                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                                    placeholder="" />
-                                <label for="address-{{i}}" class="form-label">City</label>
-                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                                    placeholder="" />
-                                <label for="address{{i}}" class="form-label">State</label>
-                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                                    placeholder="" />
-                                <label for="address{{i}}" class="form-label">ZipCode</label>
-                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                                    placeholder="" />
-                                <button type="button" class="btn btn-primary" (click)="removeAddress(i)"
-                                    *ngIf="i > 0">-</button>
-                            </div>
-                            <button type="button" class="btn btn-primary my-2" (click)="addAddress()">Add Address</button>
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                            formControlName="email"
+                            [ngClass]="{ 'is-invalid': userForm.get('email')?.invalid &&(userForm.get('email')?.touched||userForm.get('email')?.dirty), 'is-valid' : userForm.get('email')?.valid }" />
+                        <div *ngIf="userForm.get('email')?.invalid && (userForm.get('email')?.touched || userForm.get('email')?.dirty )"
+                            class="text-danger">
+                            <span *ngIf="userForm.get('email')?.errors?.['required']">
+                                **email is required.
+                            </span>
+                            <span *ngIf="userForm.get('email')?.errors?.['pattern']">
+                                **Invalid Email
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+            <div class="row">
+                <div class="col-6">
+                    <h3>Address</h3>
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary my-2" (click)="addAddress()"
+                        [disabled]="userForm.controls['addresses'].invalid">Add Address</button>
+                </div>
+                <div class="mb-3">
+                    <div formArrayName="addresses">
+                        <div *ngFor="let address of addressList.controls;let i=index" [formGroupName]="i">
+                            <div class="d-flex justify-content-between">
+                                <div><b> Address {{i+1}}</b></div>
+                                <div><button type="button" class="btn btn-primary" (click)="removeAddress(i)"
+                                        *ngIf="i > 0">-</button></div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-6">
+                                    <label for="street" class="form-label">Street</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                                        placeholder="" formControlName="street"
+                                        [ngClass]="{ 'is-invalid': addressList.at(i).get('street')?.invalid && (addressList.at(i).get('street')?.touched||addressList.at(i).get('street')?.dirty), 'is-valid' : addressList.at(i).get('street')?.valid}" />
+                                    <div *ngIf="addressList.at(i).get('street')?.invalid && (addressList.at(i).get('street')?.touched || addressList.at(i).get('street')?.dirty )"
+                                        class="text-danger">
+                                        <span *ngIf="addressList.at(i).get('street')?.errors?.['required']">
+                                            **required.
+                                        </span>
+                                    </div>
+                                    <label for="address-{{i}}" class="form-label">City</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                                        placeholder="" formControlName="city"
+                                        [ngClass]="{ 'is-invalid': addressList.at(i).get('city')?.invalid && (addressList.at(i).get('city')?.touched||addressList.at(i).get('city')?.dirty), 'is-valid' : addressList.at(i).get('city')?.valid}" />
+                                    <div *ngIf="addressList.at(i).get('city')?.invalid && (addressList.at(i).get('city')?.touched || addressList.at(i).get('city')?.dirty )"
+                                        class="text-danger">
+                                        <span *ngIf="addressList.at(i).get('city')?.errors?.['required']">
+                                            **required.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="address{{i}}" class="form-label">State</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                                        placeholder="" formControlName="state"
+                                        [ngClass]="{ 'is-invalid': addressList.at(i).get('state')?.invalid && (addressList.at(i).get('state')?.touched||addressList.at(i).get('state')?.dirty), 'is-valid' : addressList.at(i).get('state')?.valid}" />
+                                    <div *ngIf="addressList.at(i).get('state')?.invalid && (addressList.at(i).get('state')?.touched || addressList.at(i).get('state')?.dirty )"
+                                        class="text-danger">
+                                        <span *ngIf="addressList.at(i).get('state')?.errors?.['required']">
+                                            **required.
+                                        </span>
+                                    </div>
+                                    <label for="address{{i}}" class="form-label">ZipCode</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                                        placeholder="" formControlName="zipCode"
+                                        [ngClass]="{ 'is-invalid': addressList.at(i).get('zipCode')?.invalid && (addressList.at(i).get('zipCode')?.touched||addressList.at(i).get('zipCode')?.dirty), 'is-valid' : addressList.at(i).get('zipCode')?.valid}" />
+                                    <div *ngIf="addressList.at(i).get('zipCode')?.invalid && (addressList.at(i).get('zipCode')?.touched || addressList.at(i).get('zipCode')?.dirty )"
+                                        class="text-danger">
+                                        <span *ngIf="addressList.at(i).get('zipCode')?.errors?.['required']">
+                                            **required.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="my-3">
+    <h2 class="text-center my-3">Data</h2>
+    <div class="d-flex justify-content-center">
+        <ag-grid-angular style="width: 45%; height: 300px;" class="ag-theme-alpine " [rowData]="rowData"
+            [columnDefs]="columnDefs" [pagination]="true" [defaultColDef]="defaultCols">
+        </ag-grid-angular>
     </div>
 </div>

@@ -36,7 +36,7 @@ The application will allow users to add, delete, and update their addresses dyna
 3. **Adding an Address**
     - A button in the UserManagerComponent allows the user to add a new address.
     - When clicked, it pushes a new FormGroup into the FormArray.
-    - An event is emitted to notify the AppComponent of the addition.
+    - +An event is emitted to notify the AppComponent of the addition.
 
 4. **Deleting an Address**
     - Each address has a delete button that removes the corresponding FormGroup from the FormArray.
