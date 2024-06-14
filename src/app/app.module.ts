@@ -6,11 +6,16 @@ import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridModule } from 'ag-grid-angular';
+import { DescriptionComponent } from './description/description.component';
+import { MyCustomRendererComponent } from './my-custom-renderer/my-custom-renderer.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent
+    UserComponent,
+    DescriptionComponent,
+    MyCustomRendererComponent,
   ],
   imports: [
     BrowserModule,

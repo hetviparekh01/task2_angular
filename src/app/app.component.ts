@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
 
   getUserData(newItem: any) {
     this.userdata = [...this.userdata, newItem];
+    console.log("userdata",this.userdata);
     localStorage.setItem('userdata', JSON.stringify(this.userdata));
   }
 

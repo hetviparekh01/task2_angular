@@ -66,14 +66,14 @@
                 <div class="mb-3">
                     <div formArrayName="addresses">
                         <div *ngFor="let address of addressList.controls;let i=index" [formGroupName]="i">
-                            <div class="d-flex justify-content-between">
-                                <div><b> Address {{i+1}}</b></div>
-                                <div><button type="button" class="btn btn-primary" (click)="removeAddress(i)"
+                            <div class="d-flex justify-content-between mt-2">
+                                <div class="d-flex align-items-center"><b> Address {{i+1}}</b></div>
+                                <div><button type="button" class="btn btn-primary mt-1" (click)="removeAddress(i)"
                                         *ngIf="i > 0">-</button></div>
                             </div>
-                            <div class="row my-3">
-                                <div class="col-6">
-                                    <label for="street" class="form-label">Street</label>
+                            <div class="row ">
+                                <div class="col-6 mt-2">
+                                    <label for="street" class="form-label">Street:</label>
                                     <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
                                         placeholder="" formControlName="street"
                                         [ngClass]="{ 'is-invalid': addressList.at(i).get('street')?.invalid && (addressList.at(i).get('street')?.touched||addressList.at(i).get('street')?.dirty), 'is-valid' : addressList.at(i).get('street')?.valid}" />
@@ -83,7 +83,7 @@
                                             **required.
                                         </span>
                                     </div>
-                                    <label for="address-{{i}}" class="form-label">City</label>
+                                    <label for="address-{{i}}" class="form-label mt-2">City:</label>
                                     <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
                                         placeholder="" formControlName="city"
                                         [ngClass]="{ 'is-invalid': addressList.at(i).get('city')?.invalid && (addressList.at(i).get('city')?.touched||addressList.at(i).get('city')?.dirty), 'is-valid' : addressList.at(i).get('city')?.valid}" />
@@ -94,8 +94,8 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <label for="address{{i}}" class="form-label">State</label>
+                                <div class="col-6 mt-2">
+                                    <label for="address{{i}}" class="form-label">State:</label>
                                     <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
                                         placeholder="" formControlName="state"
                                         [ngClass]="{ 'is-invalid': addressList.at(i).get('state')?.invalid && (addressList.at(i).get('state')?.touched||addressList.at(i).get('state')?.dirty), 'is-valid' : addressList.at(i).get('state')?.valid}" />
@@ -105,7 +105,7 @@
                                             **required.
                                         </span>
                                     </div>
-                                    <label for="address{{i}}" class="form-label">ZipCode</label>
+                                    <label for="address{{i}}" class="form-label mt-2">ZipCode:</label>
                                     <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
                                         placeholder="" formControlName="zipCode"
                                         [ngClass]="{ 'is-invalid': addressList.at(i).get('zipCode')?.invalid && (addressList.at(i).get('zipCode')?.touched||addressList.at(i).get('zipCode')?.dirty), 'is-valid' : addressList.at(i).get('zipCode')?.valid}" />
@@ -132,8 +132,9 @@
 <div class="my-3">
     <h2 class="text-center my-3">Data</h2>
     <div class="d-flex justify-content-center">
-        <ag-grid-angular style="width: 45%; height: 300px;" class="ag-theme-alpine " [rowData]="rowData"
+        <ag-grid-angular style="width: 45%; height: 300px;" class="ag-theme-alpine " [rowData]="Data"
             [columnDefs]="columnDefs" [pagination]="true" [defaultColDef]="defaultCols">
         </ag-grid-angular>
     </div>
 </div>
+<!-- <app-my-custom-renderer></app-my-custom-renderer> -->

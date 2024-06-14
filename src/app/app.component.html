@@ -1,7 +1,3 @@
+ <app-user (newAddDataEvent)="getUserData($event)" [Data]="this.userdata" (onAddAddress)="addAddressMssg($event)"
+     (onRemoveAddressEvent)="removeAddressMssg($event)"></app-user> 
 
-<app-user (newAddDataEvent)="getUserData($event)" [Data]="userdata" (onAddAddress)="addAddressMssg($event)"
-    (onRemoveAddressEvent)="removeAddressMssg($event)"></app-user>
-
-<!-- <div *ngFor="let data of userdata">
-{{data}}
-</div> -->

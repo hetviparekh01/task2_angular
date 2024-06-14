@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ColDef } from 'ag-grid-community';
+import { MyCustomRendererComponent } from '../my-custom-renderer/my-custom-renderer.component';
 
 @Component({
   selector: 'app-user',
@@ -9,14 +10,40 @@ import { ColDef } from 'ag-grid-community';
 })
 export class UserComponent implements OnInit {
   userForm: FormGroup;
-  rowData: any[]=[];
+  rowData: any=[];
   @Input() Data: any
   columnDefs: ColDef[] = [
     { headerName: 'UserId', field: 'userId', flex: 3 },
     { headerName: 'Name', field: 'username', flex :3 },
     { headerName: 'Email', field: 'email', flex : 3 },
     { headerName: 'Address', field: 'addresses', flex: 3 },
+    {
+      headerName: 'Action',
+      field: 'action',
+      flex: 3,
+      cellRenderer: MyCustomRendererComponent, 
+      cellRendererParams: {
+        onClick: this.onBtnClick.bind(this),
+        label: 'Delete' 
+      }
+    },
   ];
+  onBtnClick(e: any) {
+    alert('Deleting user: ' + JSON.stringify(e.rowData));
+    let newData = JSON.parse(localStorage.getItem('userdata') as string);
+    newData.forEach((element:any,index:number) => {
+      if(element.userId == e.rowData.userId){
+        console.log(element.userId)
+        console.log(e.rowData.userId)
+        console.log(index);
+        newData.splice(index,1)
+      }
+    });
+    localStorage.setItem('userdata', JSON.stringify(newData));
+    this.Data = JSON.parse(localStorage.getItem('userdata') as any);
+  }
+
+
   defaultCols: ColDef = {
     filter : "agTextColumnFilter",
     floatingFilter : true
@@ -31,17 +58,14 @@ export class UserComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-    this.loadUserData();
-    console.log("Data", this.Data);
+    console.log(this.Data);
+    // this.loadUserData();
+    // console.log("Data", this.Data);
   }
-  loadUserData() {
-   this.rowData=this.Data
-  }
-  hasError(index: number, controlName: string, errorName: string): boolean {
-    return (
-      this.addressList.at(index).get(controlName)?.hasError(errorName) ?? false
-    );
-  }
+  // loadUserData() {
+  //   console.log("Data",this.Data);
+  //   this.rowData=this.Data
+  // }
   get addressList(): FormArray {
     return this.userForm.get('addresses') as FormArray
   }
@@ -59,7 +83,6 @@ export class UserComponent implements OnInit {
       // console.log("userform",this.userForm);
       // console.log(this.userForm.value);
       this.newAddDataEvent.emit(this.userForm.value);
-      this.loadUserData()
       this.userForm.reset();
     } else {
       alert("Error in filling the form!!")

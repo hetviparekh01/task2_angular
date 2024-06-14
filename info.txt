@@ -1,0 +1,89 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ColDef } from 'ag-grid-community';
+import { IAddress, IUser } from '../core/interface/user.interface';
+ 
+@Component({
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss']
+})
+export class UserListComponent implements OnInit {
+  registeredUsers: IUser[] = [];
+ 
+  pagination= true
+  paginationPageSize = 10
+  paginationPageSizeSelector = [1,10,100]
+  test:boolean = false
+  columnDefs: ColDef[] = [
+    { headerName: 'User ID', field: 'userId', sortable: true, filter: true,floatingFilter:true },
+    { headerName: 'Name', field: 'name', sortable: true, filter: true,floatingFilter:true },
+    { headerName: 'Email', field: 'email', sortable: true,flex: 1, filter: true, editable:true,floatingFilter:true },
+    {
+      headerName: 'Address', field: 'address', sortable: true, filter: true,autoHeight:true, flex: 2,floatingFilter:true, cellRenderer: (params: any) => {
+        return params.value.map((addr: IAddress, index:number) => `<li class='liComponent'> ${addr.street}, ${addr.city}, ${addr.state} - ${addr.zipCode}`).join('<br>');
+      }
+    },
+    {
+      headerName: 'Actions', field: 'actions', cellRenderer: 'actionCellRenderer',
+      cellRendererParams: {
+        onEdit: (userId: string) => this.editDetails(userId),
+        onDelete: (index: number) => this.deleteDetails(index)
+      }
+    }
+  ];
+  frameworkComponents: any;
+ 
+  constructor(private router: Router) {
+    this.frameworkComponents = {
+      actionCe llRenderer: ActionCellRenderer
+    };
+  }
+ 
+  ngOnInit() {
+    this.loadRegisteredUsers();
+  }
+  // onCellValueChanged(e:any){
+  //   alert("hbsc")
+  // }
+  loadRegisteredUsers() {
+    const storedUsers = localStorage.getItem('Reg_users');
+    if (storedUsers) {
+      this.registeredUsers = JSON.parse(storedUsers);
+    }
+  }
+ 
+  editDetails(userId: string) {
+    this.router.navigate(['/editUser', userId]);
+  }
+ 
+  deleteDetails(index: number) {
+    this.registeredUsers.splice(index, 1);
+    localStorage.setItem('Reg_users', JSON.stringify(this.registeredUsers));
+    this.loadRegisteredUsers();
+    }
+ 
+  navigateToRegister() {
+    this.router.navigateByUrl('register');
+    }
+    }
+    @Component({
+  selector: 'action-cell-renderer',
+  template: `
+<button (click)="onEdit()" class="btn btn-outline-success">Edit</button>
+<button (click)="onDelete()" class="btn btn-outline-danger ms-2">Delete</button>
+    `
+})
+export class ActionCellRenderer {
+  params: any;
+  agInit(params: any): void {
+    this.params = params;
+    }
+    onEdit() {
+      this.params.onEdit(this.params.data.userId);
+  }
+ 
+  onDelete() {
+    this.params.onDelete(this.params.index);
+    }
+    }
