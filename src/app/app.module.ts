@@ -8,7 +8,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridModule } from 'ag-grid-angular';
 import { DescriptionComponent } from './description/description.component';
 import { MyCustomRendererComponent } from './my-custom-renderer/my-custom-renderer.component';
-
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { AuthenticationInterceptor } from './authentication.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { MyCustomRendererComponent } from './my-custom-renderer/my-custom-render
     UserComponent,
     DescriptionComponent,
     MyCustomRendererComponent,
+    AuthenticationComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,9 +26,14 @@ import { MyCustomRendererComponent } from './my-custom-renderer/my-custom-render
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    AgGridModule
+    AgGridModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,useClass:AuthenticationInterceptor,multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,4 @@
+{
+    "PORT" : 3000,
+    "MONGODB_URL" : "mongodb+srv://hetvi01:mongo_01@backenddb.oe9ottm.mongodb.net/?retryWrites=true&w=majority&appName=backendDB"
+}
