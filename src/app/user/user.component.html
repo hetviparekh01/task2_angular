@@ -132,9 +132,53 @@
 <div class="my-3">
     <h2 class="text-center my-3">Data</h2>
     <div class="d-flex justify-content-center">
-        <ag-grid-angular style="width: 45%; height: 300px;" class="ag-theme-alpine " [rowData]="userData"
-            [columnDefs]="columnDefs" [pagination]="true" [defaultColDef]="defaultCols">
-        </ag-grid-angular>
+        <table class="table w-75 table-primary table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">userId</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Acttions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of userData let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{data.userId}}</td>
+                    <td>{{data.username}}</td>
+                    <td>{{data.email}}</td>
+                    <td>
+                        <div *ngFor="let address of data.addresses let ind=index">
+                            <div class="p-2">
+                                <div><b>Address {{ind+1}}</b></div>
+                                <div class="row my-1">
+                                    <div class="col-lg-6"><span class="fw-bold text-muted">Street:
+                                        </span>{{address.street}}</div>
+                                    <div class="col-lg-6"><span class="fw-bold text-muted">City: </span>{{address.city}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6"><span class="fw-bold text-muted">State:
+                                        </span>{{address.state}}</div>
+                                    <div class="col-lg-6"><span class="fw-bold text-muted">ZipCode:
+                                        </span>{{address.zipCode}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary m-1">
+                            Update
+                        </button>
+                        <button type="button" class="btn btn-primary m-1" (click)="deleteUser(data._id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <!-- <app-my-custom-renderer></app-my-custom-renderer> -->

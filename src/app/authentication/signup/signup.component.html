@@ -1,0 +1,16 @@
+
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label for="" class="form-label">UserId:</label>
+        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+            formControlName="userId" />
+    </div>
+    <div>
+        <label for="" class="form-label">Password:</label>
+        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+            formControlName="password" />
+    </div>
+        <button type="submit" class="btn btn-success">
+            Sign-Up
+        </button>
+</form>

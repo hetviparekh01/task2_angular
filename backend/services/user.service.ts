@@ -11,8 +11,10 @@ export class userService{
         return {'message' : "user is created!!"};
     }
 
-    async deleteUser(userId: number){
-        await userModel.findOneAndDelete({userId : userId});
+    async deleteUser(userId: string){
+        console.log(userId);
+        const response=await userModel.findByIdAndDelete(userId);
+        console.log(response);
         return {'message': 'user is deleted!!'};
     }
     async getAllUsers(){
@@ -28,9 +30,10 @@ export class userService{
                 return {status:true,content:"user sucessfully signed up"}
             }
             else{
-                throw new Error("User not found")
+                throw new Error("User is not created")
             }
         } catch (error:any) {
+            throw(error)
             return {status:false,content:error.message}
             
         }

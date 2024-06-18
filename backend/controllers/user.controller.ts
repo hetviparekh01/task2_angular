@@ -14,12 +14,12 @@ export class userController{
         try {
             let userdata    =req.body;
             const responsedata=await this.userServices.signup(userdata);
-            if(responsedata.status){
-                return res.status(200).json({status:responsedata.status,content:responsedata.content})
-            }
-            else{
-                return res.status(200).json({status:responsedata.status,content:responsedata.content})
-            }
+            return res.status(200).json({status:responsedata.status,content:responsedata.content})
+            // if(responsedata.status){
+            // }
+            // else{
+            //     return res.status(404).json({status:responsedata.status,content:responsedata.content})
+            // }   
             
         } catch (error:any) {
             return res.status(200).json({status:false,content:error.message})   
@@ -34,11 +34,11 @@ export class userController{
                 return res.status(200).json({status:responsedata.status,content:responsedata.content})
             }
             else{
-                return res.status(200).json({status:responsedata.status,content:responsedata.content})
+                return res.status(404).json({status:responsedata.status,content:responsedata.content})
             }
             
         } catch (error:any) {
-            return res.status(200).json({status:false,content:error.message})   
+            return res.status(500).json({status:false,content:error.message})   
         }
     }
     @httpPost('/addUser',AuthMiddleware)
@@ -53,8 +53,9 @@ export class userController{
     @httpDelete('/deleteUser')
     async deleteUser(req: Request, res: Response){
         try{
-            const userId = req.query.userId;
-            res.send(await this.userServices.deleteUser(parseInt(userId as string)));
+            const userId = req.query.id;
+            console.log(req.query);
+            res.send(await this.userServices.deleteUser(userId as string));
         }catch(err:any){
             res.send(err.message);
         }

@@ -6,18 +6,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  getapiUrl= "http://localhost:3000/user/getAllUser";
-  postapiUrl='http://localhost:3000/user/addUser'
-  loginUrl='http://localhost:3000/user/login'
+  apiUrl='http://localhost:3000/user/'
+  token:string = '';
   // httpOptions={headers:this.headers}
   constructor(private http: HttpClient) { }
   fetchData(): Observable<any> {
-    return this.http.get<any>(this.getapiUrl)
+    return this.http.get<any>(this.apiUrl+`getAllUser`)
   }
   addUser(user: any): Observable<any> {
-    return this.http.post<any>(this.postapiUrl, user)
+    return this.http.post<any>(this.apiUrl+`addUser`, user)
   }
   loginUser(userdata:any) :Observable<any> {
-    return this.http.post<any>(this.loginUrl,userdata)
+    return this.http.post<any>(this.apiUrl+`login`,userdata)
+  }
+  signupUser(userdata:any):Observable<any>{
+    return this.http.post<any>(this.apiUrl+`signup`,userdata)
+  }
+  deleteUser(id:string){
+    return this.http.delete<any>(this.apiUrl+`deleteUser/?id=${id}`)
   }
 }

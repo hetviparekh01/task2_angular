@@ -8,10 +8,10 @@ import {
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AuthenticationInterceptor implements HttpInterceptor {
+export class TokenInterceptor implements HttpInterceptor {
 
   constructor() {}
-
+ 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const accessToken=localStorage.getItem('accessToken')
     request=request.clone({
