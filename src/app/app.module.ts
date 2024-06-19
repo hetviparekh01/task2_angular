@@ -13,7 +13,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { RouterModule } from '@angular/router';
 import { TokenInterceptor } from './token.interceptor';
-import { ErrorInterceptor } from './error.interceptor';
+// import { ErrorInterceptor } from './error.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { ErrorInterceptor } from './error.interceptor';
   ],
   providers: [
     {  provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi: true },
-    {  provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi: true },
+    // {  provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi: true },
   
   ],
   bootstrap: [AppComponent]

@@ -41,6 +41,7 @@ export class userService{
     async login(userdata:any){
         try {
             const user=await authModel.findOne({userId:userdata.userId})
+        
             if(!user){
                 throw new Error("User not Found")
             }

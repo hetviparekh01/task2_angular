@@ -20,22 +20,23 @@ export class LoginComponent {
 
   userLogin() {
     this.dataservice.loginUser({
-      userId: this.loginForm.value.userId,
+      userId: this.loginForm.value.userId,  
       password: this.loginForm.value.password
     }).subscribe((response: any) => {
+      // console.log("response",response);
       if (response.status) {
         // console.log("res", response);
         localStorage.setItem("accessToken", response.content.AccessToken)
         // console.log(localStorage.getItem('accessToken'));
         this.router.navigate(['user'])
       } else {
-        alert(response.content)
-        // console.log(response.content);
+        // alert(response.error.content)
+        console.log(response.content);
       }
     },
       (err) => {
-        alert(err.statusText)
-        // console.log(err);
+        alert(err)
+        console.log(err.error.content);
       })
   }
 
